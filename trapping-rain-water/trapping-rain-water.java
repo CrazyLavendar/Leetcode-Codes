@@ -1,50 +1,41 @@
 class Solution {
     public int trap(int[] height) {
+        if(height.length <3)
+            return 0;
         
-        int res  = 0, temp = 0;
+        int res  = 0, temp = 0; // final water trap & inbetween Trap 
+        int pillar = height[0];
         
-        int pillar1 = 0, cur = 0; 
-
-        for(int i  =0 ;i<height.length ; i++){
+        for(int i  = 1 ;i<height.length ; i++){
             
-            cur = height[i];
-            
-            if(pillar1 == cur  || (pillar1 != 0 && pillar1 < cur)) {
-                res = res + temp;
+            if(pillar <= height[i]) {
+                pillar = height[i];
+                res += temp;
                 temp = 0;
             }
-            if(pillar1 < cur ) {
-                pillar1 = cur;
-                continue;
-            }
-            
-            if(cur < pillar1){
-                temp = (pillar1 - cur) + temp;
-            }
-
+ 
+            else
+                temp = (pillar - height[i]) + temp;
     }
         
-        pillar1 = 0;cur = 0;temp=0;
-    for(int i  = (height.length - 1) ;i>=0 ; i--){
+        int maxPillarLeft = pillar;
+        pillar = height[height.length - 1]; temp=0;
+        for(int i =height.length - 1 ;i>=0 ; i--){
             
-            cur = height[i];
-            
-            if((pillar1 != 0 && pillar1 < cur)) {
-                res = res + temp;
-                temp = 0;
-            }
-            if(pillar1 < cur ) {
-                pillar1 = cur;
-                continue;
-            }
-            
-            if(cur < pillar1){
-                temp = (pillar1 - cur) + temp;
-            }
+                if(height[i] == maxPillarLeft){
+                    res += temp;
+                    break;
+                }
+                if(pillar <= height[i]) {
+                    pillar = height[i];
+                    res += temp;
+                    temp = 0;
+                }
+                else 
+                   temp = (pillar - height[i]) + temp;
 
+        }
+        return res;
     }
-        
-               return res;
-               }
-               }
+}
                

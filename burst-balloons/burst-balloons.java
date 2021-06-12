@@ -2,18 +2,18 @@ class Solution {
     public int maxCoins(int[] nums) {
      
         
-        int[] newNums = new int[nums.length + 2];
+        int[] P = new int[nums.length + 2];
         
         int index = 1;
         for(int x : nums){
             if(x > 0) // Omitting zeros
-            newNums[index++] = x;
+            P[index++] = x;
         }
-        newNums[0] = newNums[index] = 1;
+        P[0] = P[index] = 1;
         int n = ++index;
         
         // for(int j =0 ; j < n ;j++){
-        //         System.out.print(newNums[j]  + "  " );
+        //         System.out.print(P[j]  + "  " );
         //     }
         //     System.out.println("");
         
@@ -31,10 +31,9 @@ class Solution {
                 max =0 ;
                 for(int k = i ; k <= j-1; k++){
                     // System.out.println(i + " " + k + " " +j);
-                    max = Math.max(max , dp[i][k] + dp[k+1][j] + newNums[i-1] * newNums[k] * newNums[j]);
+                    max = Math.max(max , dp[i][k] + dp[k+1][j] + P[i-1] * P[k] * P[j]);
                    
                 }
-                
                 dp[i][j] = max;
                 
                 

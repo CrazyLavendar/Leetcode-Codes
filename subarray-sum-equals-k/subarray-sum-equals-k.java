@@ -1,35 +1,20 @@
 class Solution {
     public int subarraySum(int[] nums, int k) {
-        int l = nums.length;
-        int[] sums = new int[l];
+
         
-        int total =0;
-        for(int i =0 ; i< l ;i++){
-            total += nums[i];
-            sums[i] = total;
-        }
-        
-        // int[][] mem = new int[l][l];
-        int res = 0;
-        for(int i =0; i< l; i++){
-            for(int j=i; j< l ; j++){
-                // mem[i][j] = sums[j] - sums[i] + nums[i];
-                if(k == sums[j] - sums[i] + nums[i])
-                    res++;
+        Map<Integer , Integer> map = new HashMap<>();
+        int sum = 0, count= 0;
+        map.put(sum , 1);
+        for(int x : nums){
+            sum += x;
+
+            if(map.containsKey(sum - k)){
+                count += map.get(sum - k);
             }
+
+            map.put(sum , map.getOrDefault(sum , 0) + 1);
         }
         
-        
-//            for(int i =0; i< l; i++){
-//             for(int j=i; j< l ; j++){
-//                 // if(res)
-//                 // mem[i][j] = sum[j] - sum[i];
-//                 System.out.print(mem[i][j] + " ");
-//             }
-//               System.out.println("");
-//         }
-        
-        return res;
-        
+        return count;
     }
 }

@@ -1,36 +1,50 @@
 class Solution {
     public int strStr(String h, String n) {
         
-        if(h.equals(n))
-            return 0;
         
-        // System.out.println(str(h,1,n));
+        int[] pattern = kmpPreProcess(n);
         
-        for(int i =0 ; i< h.length(); i++){
-
-            if(str(h , i , n))
-                return i;
-            
+//         for(int x : pre)
+//         System.out.print( x +  " ");
+        
+//         return h.indexOf(n);
+        int i =0, j =0;
+        while(i<h.length() && j < n.length()){
+            if(h.charAt(i) == n.charAt(j)){
+                i++;j++;
+                
+            } else if(j>0){
+                j = pattern[j-1];
+            }else{
+                i++;
+            }
         }
         
-        
-        return -1;
+    return j  == n.length()? i-j : -1;        
+
     }
     
-    public boolean str(String s , int i , String p){
-        
-        if(i+p.length() > s.length())
-            return false;
-        
-        int j = 0;
-        while(j < p.length()){
-            if(s.charAt(i++) != p.charAt(j++))
-                return false;
+public int[] kmpPreProcess(String n){
+    
+    int[] pattern = new int[n.length()];
+    
+    int i =1 , j =0;
+    while(i < n.length()){
+        if(n.charAt(j) == n.charAt(i)){
+            pattern[i] = j+1;
+            j++;
+        }else if(j > 0){
+            j = pattern[j-1];
+            continue;
+            
+        }else{
+            pattern[i] = 0;
         }
-        
-        return true;
-        
+        i++;
     }
+    
+    return pattern;
+}
     
     
 }

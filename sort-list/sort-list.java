@@ -10,52 +10,58 @@
  */
 class Solution {
     public ListNode sortList(ListNode head) {
-        
         if(head == null || head.next == null)
             return head;
         
-        ListNode slow = head , fast = head , prev = null;
+        ListNode slow = head, fast = head, prev = null;
         
-        while(fast != null && fast.next != null){
+        while(fast !=null && fast.next !=null){
             prev = slow;
             slow = slow.next;
             fast = fast.next.next;
+            
         }
         prev.next = null;
         
+            
         ListNode l1 = sortList(head);
         ListNode l2 = sortList(slow);
+        return merge(l1,l2);
         
-        return merge(l1 , l2);
     }
     
-    
-    public ListNode merge(ListNode p , ListNode q){
+    public ListNode merge(ListNode l1 , ListNode l2){
         
-        ListNode resHead = new ListNode(0) , curr = resHead;
+        ListNode res = new ListNode(-1), p = res;
         
-        while(p != null && q != null){
+        
+        
+        while(l1 != null && l2 != null){
             
-            if(p.val < q.val){
+            if(l1.val < l2.val){
                 
-                curr.next = p;
+                p.next = l1;
                 p = p.next;
-
+                l1 = l1.next;
+                
             }
             else{
-
-                curr.next = q;
-                q = q.next;
+                
+                p.next = l2;
+                p = p.next;
+                l2 = l2.next;
+                
             }
             
-            curr = curr.next;
         }
         
-        if(p != null)
-            curr.next = p;
-        if(q!= null)
-            curr.next = q;
+        if(l1!=null)
+            p.next = l1;
+        if(l2!=null)
+            p.next = l2;
         
-        return resHead.next;
+        
+        
+        return res.next;
     }
 }

@@ -1,38 +1,37 @@
 class Solution {
-    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+    int t;
+    public List<List<Integer>> combinationSum(int[] can, int target) {
+        t = target;
+        List<List<Integer>> res = new ArrayList<>();
         
-        List<List<Integer>>res = new ArrayList<>(); 
-        
-        backtrack(res , new ArrayList<>() , candidates , target , 0);
+        backtrack( res ,new ArrayList<>() , 0, 0, can);
         
         return res;
         
     }
     
-    public void backtrack(List<List<Integer>> res , List<Integer> curr ,int[] candidates, int balance , int pos){
+    public void backtrack(List<List<Integer>> res , List<Integer> curr , int index , int sum , int[] can){
         
         
-        
-        if(balance == 0){
+        if(sum == t){
+            
             res.add(new ArrayList<>(curr));
             return;
-        }
-        else if(balance < 0){
+        }else if(sum > t){
             return;
-        }
-        else{
-            for(int i =pos ; i< candidates.length ; i++){
+        }else{
+            
+            for(int i = index ; i< can.length; i++){
                 
-                // balance -= candidates[i];
-                
-                curr.add(candidates[i]);
-                backtrack(res , curr , candidates , balance - candidates[i]  , i);
-                curr.remove(curr.size() - 1);
-                // balance += candidates[i];
-                
+                curr.add(can[i]);
+                backtrack( res ,curr , i, sum+can[i], can);
+                curr.remove(curr.size() -1);
             }
+            
             
         }
         
     }
+    
+    
 }

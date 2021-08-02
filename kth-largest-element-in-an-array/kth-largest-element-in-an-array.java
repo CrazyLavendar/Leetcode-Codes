@@ -7,6 +7,9 @@ class Solution {
         int left = 0 , right = nums.length -1 , n = nums.length - k;
         while(left  <= right){
             
+            
+             swap(nums , left , (left+right)/2);
+            
             int pivot = pivot(nums , left , right);
             if(pivot == n)
                 return nums[pivot];
@@ -17,7 +20,7 @@ class Solution {
                 right = pivot -1;
             }
             
-            swap(nums , left , (left+right)/2);
+           
             
             
         }
